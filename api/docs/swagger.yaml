@@ -1,0 +1,183 @@
+definitions:
+  models.ListUsers:
+    properties:
+      users:
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+    type: object
+  models.StandardErrorModel:
+    properties:
+      error:
+        type: Error
+    type: object
+  models.UpdateUser:
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+    type: object
+  models.User:
+    properties:
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+    type: object
+info:
+  contact: {}
+  license: {}
+paths:
+  /v1/users:
+    get:
+      consumes:
+      - application/json
+      description: This API for getting list of users
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ListUsers'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: ListUsers
+      tags:
+      - user
+  /v1/users/:
+    post:
+      consumes:
+      - application/json
+      description: This API for creating a new user
+      parameters:
+      - description: userCreateRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: CreateUser
+      tags:
+      - user
+  /v1/users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This API for deleting user
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: DeleteUser
+      tags:
+      - user
+    get:
+      consumes:
+      - application/json
+      description: This API for getting user detail
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: GetUser
+      tags:
+      - user
+    put:
+      consumes:
+      - application/json
+      description: This API for updating user
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: userUpdateRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: UpdateUser
+      tags:
+      - user
+swagger: "2.0"
